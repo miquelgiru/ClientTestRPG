@@ -73,6 +73,7 @@ public class PlayerOnSelectState : State
                     {
                         if (currentUnit.IsEnemyInRange(enemy))
                         {
+                            nextState = PlayerFSM.PlayerStates.ATTACK_UNIT;
                             currentUnit.CurrentEnemy = enemy;
                         }
                     }

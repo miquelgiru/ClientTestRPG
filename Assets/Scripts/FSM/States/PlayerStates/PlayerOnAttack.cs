@@ -18,6 +18,7 @@ public class PlayerOnAttack : State
 
         if(OnExecuteState() || ForceQuit)
         {
+            Debug.Log("Enemy Attacked: " + enemyCurrentUnit.gameObject.name);
             fsm.GetOwner().CurrentSelectedUnit.CurrentEnemy = null;
             fsm.GetOwner().CurrentSelectedUnit.HasAttacked = true;
             fsm.GetOwner().CurrentSelectedUnit = null;
@@ -42,7 +43,7 @@ public class PlayerOnAttack : State
     protected override bool OnExecuteState()
     {
         //Attack
-        throw new System.NotImplementedException();
+        return true;
     }
 
     protected override bool OnStartState()
