@@ -106,7 +106,6 @@ public class GameManager : MonoBehaviour
 
         if(path == null)
         {
-            Debug.Log("Path is not valid");
             return;
         }
 
@@ -122,8 +121,6 @@ public class GameManager : MonoBehaviour
 
         unit.SetCurrentPath(path);
         pathDebugDraw.SetPositions(positions.ToArray());
-
-        Debug.Log("Pathfind found");
     }
 
     #endregion
@@ -175,7 +172,6 @@ public class GameManager : MonoBehaviour
             {
                 foreach(GridNode n in GetNeighbours(current, steps))
                 {
-                    Debug.Log("GetNeighbours");
                     if (!closedNodes.Contains(n))
                     {
                         int newStepCost = n.Steps;

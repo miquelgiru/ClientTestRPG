@@ -6,12 +6,14 @@ public class PlayerOnAttack : State
 {
     private Unit currentUnit;
     private Unit enemyCurrentUnit;
+    private PlayerFSM FSM;
 
-    public override bool ExecuteState(PlayerFSM fsm)
+    public override bool ExecuteState(FSM fsm)
     {
         if (!isInit)
         {
-            currentUnit = fsm.GetOwner().CurrentSelectedUnit;
+            FSM = fsm as PlayerFSM;
+            currentUnit = FSM.GetOwner().CurrentSelectedUnit;
             enemyCurrentUnit = currentUnit.CurrentEnemy;
             isInit = OnStartState();
         }
@@ -19,11 +21,9 @@ public class PlayerOnAttack : State
         if(OnExecuteState() || ForceQuit)
         {
             Debug.Log("Enemy Attacked: " + enemyCurrentUnit.gameObject.name);
-            fsm.GetOwner().CurrentSelectedUnit.CurrentEnemy = null;
-            fsm.GetOwner().CurrentSelectedUnit.HasAttacked = true;
-            fsm.GetOwner().CurrentSelectedUnit = null;
-
-            fsm.ChangeState(PlayerFSM.PlayerStates.IDLE);
+            FSM.GetOwner().CurrentSelectedUnit.CurrentEnemy = null;
+            FSM.GetOwner().CurrentSelectedUnit = null;
+            FSM.ChangeState(PlayerFSM.PlayerStates.IDLE);
 
             return OnEndState();
         }
@@ -42,12 +42,16 @@ public class PlayerOnAttack : State
 
     protected override bool OnExecuteState()
     {
-        //Attack
-        return true;
+        if(FSM.GetOwner().CurrentSelectedUnit.HasAttacked)
+            return true;
+        return false;
     }
 
     protected override bool OnStartState()
     {
+        ((UnitFSM)currentUnit.fSM).ForceChangeState(UnitFSM.UnitStates.ATTACK);
+        ((UnitFSM)enemyCurrentUnit.fSM).ForceChangeState(UnitFSM.UnitStates.ATTACKED); 
+
         return true;
     }
 }

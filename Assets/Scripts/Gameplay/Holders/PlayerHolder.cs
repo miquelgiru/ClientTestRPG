@@ -16,7 +16,7 @@ public class PlayerHolder : ScriptableObject
     {
         fSMObject = Instantiate(fSMObjectPrefab) as GameObject;
         fSM = fSMObject.GetComponent<FSM>();
-        fSM.SetOwner(this);
+        ((PlayerFSM)fSM).SetOwner(this);
     }
 
     public void RegisterUnitToPlayer(Unit u)

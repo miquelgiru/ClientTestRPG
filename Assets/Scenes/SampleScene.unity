@@ -446,7 +446,10 @@ MonoBehaviour:
   PlayerOwner: {fileID: 0}
   Stats: {fileID: 11400000, guid: 2552ef2055be3b5469a7be0ea71fa000, type: 2}
   CurrentEnemy: {fileID: 0}
+  fSMObjectPrefab: {fileID: 0}
   Steps: 0
+  DamageTaken: 0
+  HasBeenAttacked: 0
   HasAttacked: 0
   HasMoved: 0
 --- !u!136 &1310448925
@@ -756,6 +759,10 @@ MonoBehaviour:
   PlayerOwner: {fileID: 11400000, guid: a8f1229c7c8cf6c4bb8fe3fd4e732605, type: 2}
   Stats: {fileID: 11400000, guid: 2552ef2055be3b5469a7be0ea71fa000, type: 2}
   CurrentEnemy: {fileID: 0}
+  fSMObjectPrefab: {fileID: 7616699787437341553, guid: 2e68127954b9adc4dbaed28e5c68bd05,
+    type: 3}
   Steps: 0
+  DamageTaken: 0
+  HasBeenAttacked: 0
   HasAttacked: 0
   HasMoved: 0

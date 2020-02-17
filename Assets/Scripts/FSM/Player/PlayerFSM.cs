@@ -11,6 +11,7 @@ public struct StateNode
 
 public class PlayerFSM : FSM
 {
+    private PlayerHolder Owner;
     public enum PlayerStates { SELECT_UNIT, MOVE_UNIT, ATTACK_UNIT, IDLE }
     public PlayerStates CurrentState;
 
@@ -28,9 +29,9 @@ public class PlayerFSM : FSM
     {
         if(CurrentState != newState)
         {
-            Debug.Log("State changed to: " + newState.ToString());
             CurrentState = newState;
             states[CurrentState].isInit = false;
+            Debug.Log(newState.ToString());
         }
     }
 
@@ -47,12 +48,12 @@ public class PlayerFSM : FSM
         states[CurrentState].ExecuteState(this);
     }
 
-    public override void SetOwner(PlayerHolder owner)
+    public void SetOwner(PlayerHolder owner)
     {
         Owner = owner;
     }
 
-    public override PlayerHolder GetOwner()
+    public PlayerHolder GetOwner()
     {
         return Owner;
     }

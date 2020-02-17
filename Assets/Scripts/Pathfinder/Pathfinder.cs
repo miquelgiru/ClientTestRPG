@@ -173,7 +173,6 @@ public class Pathfinder
 
     public void JobFinished()
     {
-        Debug.Log("Path found");
         OnPathfindFinished?.Invoke(Path, unit);
     }
 }

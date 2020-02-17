@@ -7,17 +7,17 @@ public class PlayerOnIdleState : State
     private PlayerHolder player;
     private PlayerFSM.PlayerStates nextState;
 
-    public override bool ExecuteState(PlayerFSM fsm)
+    public override bool ExecuteState(FSM fsm)
     {
         if (!isInit)
         {
-            player = fsm.GetOwner();
+            player = ((PlayerFSM)fsm).GetOwner();
             isInit = OnStartState();
         }
 
         if(OnExecuteState() || ForceQuit)
         {
-            fsm.ChangeState(nextState);
+            ((PlayerFSM)fsm).ChangeState(nextState);
             return OnEndState();
         }
 
@@ -44,10 +44,12 @@ public class PlayerOnIdleState : State
                     Unit unit = hit.collider.GetComponent<Unit>();
                     if (player.IsUnitFromPlayer(unit))
                     {
-                        player.SetSelectedUnit(unit);
-                        Debug.Log("Unit Selecxted");
-                        nextState = PlayerFSM.PlayerStates.SELECT_UNIT;
-                        return true;
+                        if(!unit.HasMoved && !unit.HasAttacked)
+                        {
+                            player.SetSelectedUnit(unit);
+                            nextState = PlayerFSM.PlayerStates.SELECT_UNIT;
+                            return true;
+                        }                      
                     }
                 }
             }

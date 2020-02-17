@@ -6,61 +6,37 @@ using System.Collections.Generic;
 public class PlayerOnMoveState : State
 {
     private Unit currentUnit = null;
-    private List<GridNode> path = null;
-
     private int index = 0;
 
-    public override bool ExecuteState(PlayerFSM fsm)
+    public override bool ExecuteState(FSM fsm)
     {
         if (!isInit)
         {
+            currentUnit = ((PlayerFSM)fsm).GetOwner().CurrentSelectedUnit;
             isInit = OnStartState();
-            currentUnit = fsm.GetOwner().CurrentSelectedUnit;
         }
 
-        if (currentUnit != null)
-            path = currentUnit.CurrentPath;
-
-        if(path != null)
+        if (OnExecuteState() || ForceQuit)
         {
-            if (OnExecuteState() || ForceQuit)
-            {
-                fsm.ChangeState(PlayerFSM.PlayerStates.SELECT_UNIT);
-                return OnEndState();
-            }
+            ((PlayerFSM)fsm).ChangeState(PlayerFSM.PlayerStates.IDLE);
+            ((UnitFSM)currentUnit.fSM).ForceChangeState(UnitFSM.UnitStates.IDLE);
+            return OnEndState();
         }
-       
+           
         return false;
     }
 
     protected override bool OnStartState()
     {
-        index = 0;
-        path = null;
+        UnitFSM fSM = currentUnit.fSM as UnitFSM;
+        fSM.ForceChangeState(UnitFSM.UnitStates.MOVE);
         return true;
     }
 
     protected override bool OnExecuteState()
     {
-        Vector3 from = path[index].WorldPosition;
-        Vector3 to = path[index + 1].WorldPosition;
-        Vector3 move = Vector3.MoveTowards(currentUnit.transform.position, to, Time.deltaTime * 2);
-        currentUnit.transform.position = move;
-
-        float dis = Vector3.Distance(currentUnit.transform.position, to);
-        if (dis <= 0.05)
-        {
-            currentUnit.transform.position = to;
-            if (index + 2 == path.Count)
-            {
-                currentUnit.SetCurrentNode(path[index + 1]);
-                Debug.Log("Target reached");
-                return true;
-            }
-
-            index++;
-
-        }
+        if (currentUnit.HasMoved)
+            return true;
 
         return false;
     }
@@ -68,10 +44,9 @@ public class PlayerOnMoveState : State
     protected override bool OnEndState()
     {
         isInit = false;
-        currentUnit.HasMoved = true;
         currentUnit = null;
-        path = null;
         ForceQuit = false;
+        index = 0;
 
         return true;
     }

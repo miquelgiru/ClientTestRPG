@@ -8,19 +8,19 @@ public class PlayerOnSelectState : State
     private PlayerHolder player;
     private PlayerFSM.PlayerStates nextState;
 
-    public override bool ExecuteState(PlayerFSM fsm)
+    public override bool ExecuteState(FSM fsm)
     {
         if (!isInit)
         {
-            player = fsm.GetOwner();
+            player = ((PlayerFSM)fsm).GetOwner();
             currentUnit = player.CurrentSelectedUnit;
             isInit = OnStartState();
         }
 
         if(OnExecuteState() || ForceQuit)
         {
-            fsm.ChangeState(nextState);
-            OnEndState();
+            ((PlayerFSM)fsm).ChangeState(nextState);
+            return OnEndState();
         }
 
         return false;
@@ -29,20 +29,23 @@ public class PlayerOnSelectState : State
     protected override bool OnStartState()
     {
         ForceQuit = false;
+
         GameManager.Instance.HighlightUnitMovementOptions(currentUnit);
         GameManager.Instance.HighlightReachableEnemyunits(currentUnit);
+
+        ((UnitFSM)currentUnit.fSM).ForceChangeState(UnitFSM.UnitStates.SELECTED);
+
         return true;
     }
 
     protected override bool OnExecuteState()
     {
-        if (Input.GetMouseButton(0)) // TODO: Input manager should handle this
+        if (Input.GetMouseButtonDown(0)) // TODO: Input manager should handle this
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 1000))
             {
-
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Floor"))
                 {
                     GridNode target = GameManager.Instance.gridManager.GetNodeFromWorldPosition(hit.transform.position);
@@ -50,14 +53,12 @@ public class PlayerOnSelectState : State
                     {
                         if (GameManager.Instance.IsNodeReachable(target))
                         {
-                            Debug.Log("Is reachable");
                             nextState = PlayerFSM.PlayerStates.MOVE_UNIT;
                             GameManager.Instance.PathfinderCall(target, currentUnit);
                         }
 
                         else
                         {
-                            Debug.Log("Unselect unit");
                             nextState = PlayerFSM.PlayerStates.IDLE;
                             player.CurrentSelectedUnit = null;
                         }
@@ -75,7 +76,14 @@ public class PlayerOnSelectState : State
                         {
                             nextState = PlayerFSM.PlayerStates.ATTACK_UNIT;
                             currentUnit.CurrentEnemy = enemy;
+                            return true;
                         }
+                    }
+
+                    else
+                    {
+                        player.CurrentSelectedUnit = enemy;
+                        ForceQuit = true;
                     }
                 }
             }

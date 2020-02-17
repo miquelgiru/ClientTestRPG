@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32de60118bb1c314d9f5d11d1048988d, type: 3}
-  m_Name: PlayerOnSelectState
+  m_Script: {fileID: 11500000, guid: 95915475d199b8242b886e37de777029, type: 3}
+  m_Name: UnitAttackedState
   m_EditorClassIdentifier: 
   ForceQuit: 0
+  isInit: 0

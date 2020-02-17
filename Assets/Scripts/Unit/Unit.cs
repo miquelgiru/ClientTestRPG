@@ -8,9 +8,16 @@ public class Unit : MonoBehaviour
     public UnitStats Stats;
     public Unit CurrentEnemy = null;
     private GridNode currentNode = null;
-   
+
+    [Header("State Machine")]
+    [System.NonSerialized] public FSM fSM;
+    GameObject fSMObject;
+    [SerializeField] GameObject fSMObjectPrefab;
+
 
     public int Steps = 0;
+    public float DamageTaken = 0;
+    public bool HasBeenAttacked = false;
 
     public List<GridNode> CurrentPath;
 
@@ -21,6 +28,10 @@ public class Unit : MonoBehaviour
     {
         GameManager.Instance.RegisterUnit(this);
         PlayerOwner.RegisterUnitToPlayer(this);
+
+        fSMObject = Instantiate(fSMObjectPrefab) as GameObject;
+        fSM = fSMObject.GetComponent<FSM>();
+        ((UnitFSM)fSM).SetOwner(this);
     }
 
     public GridNode GetCurrentNode()
@@ -41,14 +52,24 @@ public class Unit : MonoBehaviour
         currentNode = node;
     }
 
-    private void Update()
-    {
-        if(currentNode != null)
-            Debug.Log(currentNode.WorldPosition.ToString());
-    }
-
     public bool IsEnemyInRange(Unit enemy)
     {
         return (Vector3.Distance(currentNode.WorldPosition, enemy.currentNode.WorldPosition) <= Stats.AttackRange);
+    }
+
+    public void RecalculateHealth()
+    {
+        if(Stats.HealthPoints <= DamageTaken)
+        {
+            ((UnitFSM)fSM).ChangeState(UnitFSM.UnitStates.DIE);
+        }
+    }
+
+    public bool Die()
+    {
+        GameManager.Instance.UnRegisterUnit(this);
+        PlayerOwner.UnregisterUnitToPlayer(this);
+        DestroyImmediate(gameObject);
+        return true;
     }
 }
