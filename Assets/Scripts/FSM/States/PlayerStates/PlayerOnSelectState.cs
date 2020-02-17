@@ -28,13 +28,15 @@ public class PlayerOnSelectState : State
 
     protected override bool OnStartState()
     {
+        ForceQuit = false;
         GameManager.Instance.HighlightUnitMovementOptions(currentUnit);
+        GameManager.Instance.HighlightReachableEnemyunits(currentUnit);
         return true;
     }
 
     protected override bool OnExecuteState()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)) // TODO: Input manager should handle this
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -61,6 +63,18 @@ public class PlayerOnSelectState : State
                         }
 
                         return true;
+                    }
+                }
+
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Unit"))
+                {
+                    Unit enemy = hit.collider.gameObject.GetComponent<Unit>();
+                    if (!player.IsUnitFromPlayer(enemy))
+                    {
+                        if (currentUnit.IsEnemyInRange(enemy))
+                        {
+                            currentUnit.CurrentEnemy = enemy;
+                        }
                     }
                 }
             }

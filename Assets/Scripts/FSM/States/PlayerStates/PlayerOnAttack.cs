@@ -9,21 +9,44 @@ public class PlayerOnAttack : State
 
     public override bool ExecuteState(PlayerFSM fsm)
     {
-        throw new System.NotImplementedException();
+        if (!isInit)
+        {
+            currentUnit = fsm.GetOwner().CurrentSelectedUnit;
+            enemyCurrentUnit = currentUnit.CurrentEnemy;
+            isInit = OnStartState();
+        }
+
+        if(OnExecuteState() || ForceQuit)
+        {
+            fsm.GetOwner().CurrentSelectedUnit.CurrentEnemy = null;
+            fsm.GetOwner().CurrentSelectedUnit.HasAttacked = true;
+            fsm.GetOwner().CurrentSelectedUnit = null;
+
+            fsm.ChangeState(PlayerFSM.PlayerStates.IDLE);
+
+            return OnEndState();
+        }
+
+        return false;
     }
 
     protected override bool OnEndState()
     {
-        throw new System.NotImplementedException();
+        currentUnit = null;
+        enemyCurrentUnit = null;
+        ForceQuit = false;
+
+        return true;
     }
 
     protected override bool OnExecuteState()
     {
+        //Attack
         throw new System.NotImplementedException();
     }
 
     protected override bool OnStartState()
     {
-        throw new System.NotImplementedException();
+        return true;
     }
 }

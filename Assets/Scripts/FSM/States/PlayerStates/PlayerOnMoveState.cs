@@ -71,6 +71,8 @@ public class PlayerOnMoveState : State
         currentUnit.HasMoved = true;
         currentUnit = null;
         path = null;
+        ForceQuit = false;
+
         return true;
     }
 }

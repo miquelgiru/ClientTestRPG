@@ -17,17 +17,21 @@ public class GameManager : MonoBehaviour
     bool ispathfinding = false;
 
     public Material ReachableMaterial;
+    public Material ReachableEnemyMaterial;
     public Material DefaultMaterial;
+
     private List<GridNode> highlightedNodes = new List<GridNode>();
+    private List<Unit> allUnits = new List<Unit>();
 
     private void Awake()
     {
         instance = this;
+        gridManager.Init();
     }
 
     private void Start()
     {
-        gridManager.Init();
+        
         InitFSMs();
     }
 
@@ -52,6 +56,37 @@ public class GameManager : MonoBehaviour
         foreach(Turn t in Turns)
         {
             t.Player.Init();
+        }
+    }
+
+
+    public void RegisterUnit(Unit unit)
+    {
+        if (!allUnits.Contains(unit)) 
+            allUnits.Add(unit);
+
+        Vector3 pos = unit.transform.position;
+        unit.SetCurrentNode(gridManager.GetNodeFromWorldPosition(pos));
+    }
+
+    public void UnRegisterUnit(Unit unit)
+    {
+        if (allUnits.Contains(unit))
+            allUnits.Remove(unit);
+    }
+
+    public void HighlightReachableEnemyunits(Unit unit)
+    {
+        foreach(Unit u in allUnits)
+        {
+            if(u.PlayerOwner != unit.PlayerOwner)
+            {
+                if (unit.IsEnemyInRange(u))
+                {
+                    u.GetCurrentNode().TileRenderer.material = ReachableEnemyMaterial;
+                    highlightedNodes.Add(u.GetCurrentNode());
+                }
+            }
         }
     }
 
@@ -162,7 +197,7 @@ public class GameManager : MonoBehaviour
             closedNodes.Add(current);
         }
 
-        foreach(GridNode n in reachableNodes)
+        foreach(GridNode n in closedNodes)
         {
             n.Steps = 0;
         }

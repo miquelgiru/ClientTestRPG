@@ -59,6 +59,7 @@ public class PlayerOnIdleState : State
     {
         isInit = false;
         player = null;
+        ForceQuit = false;
 
         return true;
     }
