@@ -11,7 +11,7 @@ public class UnitOnAttackState : State
     public override bool ExecuteState(FSM fsm)
     {
         FSM = fsm as UnitFSM;
-        target = FSM.GetOwner().CurrentEnemy;
+        target = FSM.GetUnitOwner().CurrentEnemy;
 
 
         if (!isInit)
@@ -36,9 +36,11 @@ public class UnitOnAttackState : State
 
     protected override bool OnEndState()
     {
+        FSM.ChangeState(UnitFSM.UnitStates.IDLE);
+
         //Attack management
-        FSM.GetOwner().HasAttacked = true;
-        target.DamageTaken += FSM.GetOwner().Stats.DamageAttackPoints;
+        FSM.GetUnitOwner().HasAttacked = true;
+        target.DamageTaken += FSM.GetUnitOwner().Stats.DamageAttackPoints;
         target.HasBeenAttacked = true;
 
         isInit = false;

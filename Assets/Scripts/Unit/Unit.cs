@@ -29,9 +29,9 @@ public class Unit : MonoBehaviour
         GameManager.Instance.RegisterUnit(this);
         PlayerOwner.RegisterUnitToPlayer(this);
 
-        fSMObject = Instantiate(fSMObjectPrefab) as GameObject;
+        fSMObject = Instantiate(fSMObjectPrefab, transform) as GameObject;
         fSM = fSMObject.GetComponent<FSM>();
-        ((UnitFSM)fSM).SetOwner(this);
+        ((UnitFSM)fSM).SetUnitOwner(this);
     }
 
     public GridNode GetCurrentNode()

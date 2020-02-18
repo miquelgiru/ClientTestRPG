@@ -10,18 +10,23 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return instance; } }
     #endregion
 
-    private int turnIndex = 0;
-    public Turn[] Turns;
+   
+    private bool ispathfinding = false;
+    private List<GridNode> highlightedNodes = new List<GridNode>();
+    private List<Unit> allUnits = new List<Unit>();
+
+    [Header("Gid Management")]
     public GridManager gridManager;
     public LineRenderer pathDebugDraw;
-    bool ispathfinding = false;
-
     public Material ReachableMaterial;
     public Material ReachableEnemyMaterial;
     public Material DefaultMaterial;
 
-    private List<GridNode> highlightedNodes = new List<GridNode>();
-    private List<Unit> allUnits = new List<Unit>();
+    [Header("Turn Management")]
+    public List<Turn> Turns;
+    private int turnIndex = 0;
+    private Turn currentTurn = null;
+
 
     private void Awake()
     {
@@ -30,24 +35,24 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start()
-    {
-        
+    {      
         InitFSMs();
+
+        if (Turns.Count > 0)
+        {
+            currentTurn = Turns[0];
+            currentTurn.StartTurn();
+        }
     }
 
     private void Update()
     {
-        if (Turns.Length <= 0)
-            return;
+        if (Input.GetKeyUp(KeyCode.P)){
 
-        if (Turns[turnIndex].Execute())
-        {
-            ++turnIndex;
-
-            if(turnIndex > Turns.Length - 1)
-            {
+            if (Turns.Count - 1 == turnIndex)
                 turnIndex = 0;
-            }
+
+            ChangeTurn(Turns[++turnIndex]);
         }
     }
 
@@ -59,7 +64,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    #region Unit Management
     public void RegisterUnit(Unit unit)
     {
         if (!allUnits.Contains(unit)) 
@@ -74,21 +79,31 @@ public class GameManager : MonoBehaviour
         if (allUnits.Contains(unit))
             allUnits.Remove(unit);
     }
+    #endregion
 
-    public void HighlightReachableEnemyunits(Unit unit)
+    #region Turn Management
+    public void ChangeTurn(Turn turn)
     {
-        foreach(Unit u in allUnits)
+        if(turn != currentTurn)
         {
-            if(u.PlayerOwner != unit.PlayerOwner)
-            {
-                if (unit.IsEnemyInRange(u))
-                {
-                    u.GetCurrentNode().TileRenderer.material = ReachableEnemyMaterial;
-                    highlightedNodes.Add(u.GetCurrentNode());
-                }
-            }
+            if(currentTurn != null)
+                currentTurn.EndTurn();
+            currentTurn = turn;
+            currentTurn.StartTurn();
         }
     }
+
+    public void PasTurn()
+    {
+        int index = Turns.IndexOf(currentTurn) + 1;
+
+        if (index >= Turns.Count)
+            index = 0;
+
+        Turn next = Turns[index];
+        ChangeTurn(next);
+    }
+    #endregion
 
     #region Pathfinder
     public void PathfinderCall(GridNode target, Unit u)
@@ -201,7 +216,7 @@ public class GameManager : MonoBehaviour
         UptdateReachableNodes(reachableNodes);
     }
 
-    List<GridNode> GetNeighbours(GridNode center, int step)
+    public List<GridNode> GetNeighbours(GridNode center, int step)
     {
         List<GridNode> ret = new List<GridNode>();
 
@@ -240,5 +255,29 @@ public class GameManager : MonoBehaviour
     {
         return highlightedNodes.Contains(node);
     }
+
+    public void HighlightReachableEnemyunits(Unit unit)
+    {
+        foreach (Unit u in allUnits)
+        {
+            if (u.PlayerOwner != unit.PlayerOwner)
+            {
+                if (unit.IsEnemyInRange(u))
+                {
+                    u.GetCurrentNode().TileRenderer.material = ReachableEnemyMaterial;
+                    highlightedNodes.Add(u.GetCurrentNode());
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region AI Management
+
+    public List<Unit> GetAllUnits()
+    {
+        return allUnits;
+    }
+
     #endregion
 }

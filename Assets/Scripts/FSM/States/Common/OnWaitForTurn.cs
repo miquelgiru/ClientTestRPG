@@ -1,41 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[CreateAssetMenu(fileName = "UnitDieState", menuName = "Gameplay/Unit/States/UnitDieState", order = 1)]
-public class UnitOnDieState : State
+[CreateAssetMenu(fileName = "WaitForTurnState", menuName = "Gameplay/Player/States/WaitForTurnState", order = 1)]
+public class AiOnWaitForTurn : State
 {
-    private UnitFSM FSM;
-
     public override bool ExecuteState(FSM fsm)
     {
-        FSM = fsm as UnitFSM;
-
         if (!isInit)
         {
+            foreach(Unit u in fsm.GetOwner().Units)
+            {
+                var temp = u.fSM as UnitFSM;
+                temp.ForceChangeState(UnitFSM.UnitStates.IDLE);
+            }
+                
             isInit = OnStartState();
         }
 
-
         if (OnExecuteState() || ForceQuit)
         {
+            
             return OnEndState();
         }
+
         return false;
     }
 
     protected override bool OnEndState()
     {
-        FSM = null;
-        ForceQuit = false;
-        isInit = false;
-        FSM.GetUnitOwner().Die();
         return true;
     }
 
     protected override bool OnExecuteState()
     {
-        //NEXT STEPS: Play die animation and return true when finished
-        return true;
+        //TODO GET NOTIFICATION THAT NEW TURN HAS STARTED and ret true
+
+        return false;
     }
 
     protected override bool OnStartState()

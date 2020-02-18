@@ -31,7 +31,7 @@ public class UnitOnAttackedState : State
     {
         isInit = false;
         ForceQuit = false;
-        FSM.GetOwner().RecalculateHealth();
+        FSM.GetUnitOwner().RecalculateHealth();
         return true;
     }
 
@@ -40,7 +40,7 @@ public class UnitOnAttackedState : State
         //TODO: feedback on attack
         //NEXT STEPS: Play animation on being attacked
 
-        if (FSM.GetOwner().HasBeenAttacked)
+        if (FSM.GetUnitOwner().HasBeenAttacked)
             return true;
 
         return false;

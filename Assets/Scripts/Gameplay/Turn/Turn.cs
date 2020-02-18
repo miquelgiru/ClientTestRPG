@@ -4,36 +4,42 @@ using System.Collections;
 [CreateAssetMenu(fileName = "Turn", menuName = "Gameplay/Turn", order = 1)]
 public class Turn : ScriptableObject
 {
-
-    private int phaseIndex = 0;
+    public enum PlayerType { STANDART_PLAYER, AI_PLAYER}
+    public PlayerType Type;
+    private int turnCount = 0;
 
     public PlayerHolder Player;
-    public Phase[] Phases;
+   
 
-   public bool Execute()
-   {
-        bool ret = false;
-
-        Phases[phaseIndex].OnStartPhase(this);
-
-        if (Phases[phaseIndex].IsFinished(this))
+    public void StartTurn()
+    {
+        switch (Type)
         {
-            Phases[phaseIndex].OnEndPhase(this);
-            ++phaseIndex;
+            case PlayerType.STANDART_PLAYER:
+                ((PlayerFSM)Player.fSM).ChangeState(PlayerFSM.PlayerStates.IDLE);
+                break;
 
-            if(phaseIndex > Phases.Length - 1)
-            {
-                phaseIndex = 0;
-                ret = true;
-            }
+            case PlayerType.AI_PLAYER:
+                ((AiFSM)Player.fSM).ChangeState(AiFSM.AiStates.MANAGE_TURN);
+                break;
         }
 
-        return ret;
-   }
-
-
-    public void ForceEndPhase()
-    {
-        Phases[phaseIndex].ForceExit = true;
+        ++turnCount;
     }
+
+    public void EndTurn()
+    {
+        switch (Type)
+        {
+            case PlayerType.STANDART_PLAYER:
+                ((PlayerFSM)Player.fSM).ChangeState(PlayerFSM.PlayerStates.WAIT_FOR_TURN);
+                break;
+
+            case PlayerType.AI_PLAYER:
+                ((AiFSM)Player.fSM).ChangeState(AiFSM.AiStates.WAIT_FOR_TURN);
+                break;
+        }
+    }
+
+   
 }

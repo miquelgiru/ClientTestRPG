@@ -9,14 +9,14 @@ public class PlayerHolder : ScriptableObject
     GameObject fSMObject;
     [SerializeField] GameObject fSMObjectPrefab;
 
-    public List<Unit> Units = new List<Unit>();
-    public Unit CurrentSelectedUnit = null;
+    [System.NonSerialized] public List<Unit> Units = new List<Unit>();
+    [System.NonSerialized] public Unit CurrentSelectedUnit = null;
 
     public void Init()
     {
         fSMObject = Instantiate(fSMObjectPrefab) as GameObject;
         fSM = fSMObject.GetComponent<FSM>();
-        ((PlayerFSM)fSM).SetOwner(this);
+        fSM.SetOwner(this);
     }
 
     public void RegisterUnitToPlayer(Unit u)

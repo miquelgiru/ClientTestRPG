@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd066e060ae95b745a1914869d473b0f, type: 3}
-  m_Name: UnitDieState
+  m_Script: {fileID: 11500000, guid: c88608c2dc79b6142a80aa74c37d7bd7, type: 3}
+  m_Name: UnitSelectedState
   m_EditorClassIdentifier: 
-  ForceQuit: 0
-  isInit: 0

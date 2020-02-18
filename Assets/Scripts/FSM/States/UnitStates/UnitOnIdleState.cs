@@ -9,6 +9,8 @@ public class UnitOnIdleState : State
         if (!isInit)
         {
             isInit = OnStartState();
+            ForceQuit = false;
+            Debug.Log(((UnitFSM)fsm).GetUnitOwner().gameObject.name);
         }
 
         if (OnExecuteState() || ForceQuit)
@@ -29,7 +31,6 @@ public class UnitOnIdleState : State
         //NEXT STEPS: Idle animation should end here
 
         isInit = false;
-        ForceQuit = false;
         return true;
     }
 

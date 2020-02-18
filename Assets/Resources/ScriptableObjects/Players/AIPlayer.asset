@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95915475d199b8242b886e37de777029, type: 3}
-  m_Name: UnitAttackedState
+  m_Script: {fileID: 11500000, guid: 9ea9c01410598914ba06464969ba00c0, type: 3}
+  m_Name: AIPlayer
   m_EditorClassIdentifier: 
-  ForceQuit: 0
-  isInit: 0
+  fSMObjectPrefab: {fileID: 3917265813511805265, guid: 1c5ae8a9f92062e499cb5d93ba0b0df7,
+    type: 3}

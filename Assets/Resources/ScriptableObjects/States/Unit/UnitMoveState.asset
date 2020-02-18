@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fc47c33720c42540b7afc636fd54edd, type: 3}
-  m_Name: UnitIdleState
+  m_Script: {fileID: 11500000, guid: 9f25b33556888924b965e612b80b0392, type: 3}
+  m_Name: UnitMoveState
   m_EditorClassIdentifier: 
-  ForceQuit: 0
-  isInit: 0

@@ -12,7 +12,7 @@ public class UnitOnMoveState : State
 
     public override bool ExecuteState(FSM fsm)
     {
-        unit = ((UnitFSM)fsm).GetOwner();
+        unit = ((UnitFSM)fsm).GetUnitOwner();
 
         if (!isInit)
         {

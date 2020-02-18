@@ -12,11 +12,11 @@ public struct StateNodeUnit
 
 public class UnitFSM : FSM
 {
-    private Unit Owner;
+    private Unit OwnerUnit;
 
     public enum UnitStates { SELECTED, MOVE, ATTACK, ATTACKED, IDLE, DIE, NONE }
     public UnitStates CurrentState;
-    public UnitStates ForcedState;
+    public UnitStates ForcedState = UnitStates.NONE;
 
     public List<StateNodeUnit> StateNodes;
     private Dictionary<UnitStates, State> states = new Dictionary<UnitStates, State>();
@@ -32,7 +32,8 @@ public class UnitFSM : FSM
     {
         foreach (StateNodeUnit n in StateNodes)
         {
-            states.Add(n.StateType, n.state);
+            State state = Instantiate(n.state);
+            states.Add(n.StateType, state);
         }
     }
 
@@ -48,8 +49,9 @@ public class UnitFSM : FSM
     }
     public void ForceChangeState(UnitStates newState)
     {
-        states[CurrentState].ForceQuit = true;
+        Debug.Log("PASA");
         ForcedState = newState;
+        states[CurrentState].ForceQuit = true;
     }
 
 
@@ -58,13 +60,13 @@ public class UnitFSM : FSM
         states[CurrentState].ExecuteState(this);
     }
 
-    public void SetOwner(Unit owner)
+    public void SetUnitOwner(Unit owner)
     {
-        Owner = owner;
+        OwnerUnit = owner;
     }
 
-    public Unit GetOwner()
+    public Unit GetUnitOwner()
     {
-        return Owner;
+        return OwnerUnit;
     }
 }

@@ -30,7 +30,8 @@ public class PlayerOnSelectState : State
     {
         ForceQuit = false;
 
-        GameManager.Instance.HighlightUnitMovementOptions(currentUnit);
+        if(!currentUnit.HasMoved)
+            GameManager.Instance.HighlightUnitMovementOptions(currentUnit);
         GameManager.Instance.HighlightReachableEnemyunits(currentUnit);
 
         ((UnitFSM)currentUnit.fSM).ForceChangeState(UnitFSM.UnitStates.SELECTED);

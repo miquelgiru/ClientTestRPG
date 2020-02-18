@@ -298,14 +298,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fab680344d157649b95d7080628d73c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Turns:
-  - {fileID: 11400000, guid: a21728adbd539474597d3fd3b0396869, type: 2}
   gridManager: {fileID: 263646875}
   pathDebugDraw: {fileID: 1342276579}
   ReachableMaterial: {fileID: 2100000, guid: fba2e13e77021dc4897e43be8d427f4a, type: 2}
   ReachableEnemyMaterial: {fileID: 2100000, guid: 2908f9b0b6cd47140950cf4df3c38e4e,
     type: 2}
   DefaultMaterial: {fileID: 2100000, guid: 6a7096a95dc4516418a15acfa1a6c771, type: 2}
+  Turns:
+  - {fileID: 11400000, guid: a21728adbd539474597d3fd3b0396869, type: 2}
+  - {fileID: 11400000, guid: 4cd31b37749b9524a9eb06ba42c66c45, type: 2}
 --- !u!4 &263646877
 Transform:
   m_ObjectHideFlags: 0
@@ -443,10 +444,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a738131ff0d2742b9319e85330872e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerOwner: {fileID: 0}
+  PlayerOwner: {fileID: 11400000, guid: 2f989cce65811584785fd67caf7e970d, type: 2}
   Stats: {fileID: 11400000, guid: 2552ef2055be3b5469a7be0ea71fa000, type: 2}
   CurrentEnemy: {fileID: 0}
-  fSMObjectPrefab: {fileID: 0}
+  fSMObjectPrefab: {fileID: 7616699787437341553, guid: 2e68127954b9adc4dbaed28e5c68bd05,
+    type: 3}
   Steps: 0
   DamageTaken: 0
   HasBeenAttacked: 0

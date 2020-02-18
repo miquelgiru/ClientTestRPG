@@ -18,7 +18,7 @@ public class PlayerOnMoveState : State
 
         if (OnExecuteState() || ForceQuit)
         {
-            ((PlayerFSM)fsm).ChangeState(PlayerFSM.PlayerStates.IDLE);
+            ((PlayerFSM)fsm).ChangeState(PlayerFSM.PlayerStates.SELECT_UNIT);
             ((UnitFSM)currentUnit.fSM).ForceChangeState(UnitFSM.UnitStates.IDLE);
             return OnEndState();
         }

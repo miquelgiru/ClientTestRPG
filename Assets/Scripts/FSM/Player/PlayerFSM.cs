@@ -11,8 +11,7 @@ public struct StateNode
 
 public class PlayerFSM : FSM
 {
-    private PlayerHolder Owner;
-    public enum PlayerStates { SELECT_UNIT, MOVE_UNIT, ATTACK_UNIT, IDLE }
+    public enum PlayerStates { SELECT_UNIT, MOVE_UNIT, ATTACK_UNIT, IDLE, WAIT_FOR_TURN }
     public PlayerStates CurrentState;
 
     public List<StateNode> StateNodes;
@@ -31,7 +30,6 @@ public class PlayerFSM : FSM
         {
             CurrentState = newState;
             states[CurrentState].isInit = false;
-            Debug.Log(newState.ToString());
         }
     }
 
@@ -39,22 +37,13 @@ public class PlayerFSM : FSM
     {
         foreach(StateNode n in StateNodes)
         {
-            states.Add(n.StateType, n.state);
+            State state = Instantiate(n.state);
+            states.Add(n.StateType, state);
         }
     }
 
     private void Update()
     {
         states[CurrentState].ExecuteState(this);
-    }
-
-    public void SetOwner(PlayerHolder owner)
-    {
-        Owner = owner;
-    }
-
-    public PlayerHolder GetOwner()
-    {
-        return Owner;
     }
 }
