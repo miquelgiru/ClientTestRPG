@@ -63,6 +63,13 @@ public class Unit : MonoBehaviour
         {
             ((UnitFSM)fSM).ChangeState(UnitFSM.UnitStates.DIE);
         }
+
+        RecalculateHealthBar();
+    }
+
+    private void RecalculateHealthBar()
+    {
+
     }
 
     public bool Die()

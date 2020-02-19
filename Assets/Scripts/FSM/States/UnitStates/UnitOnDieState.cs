@@ -25,10 +25,10 @@ public class UnitOnDieState : State
 
     protected override bool OnEndState()
     {
-        FSM = null;
         ForceQuit = false;
         isInit = false;
         FSM.GetUnitOwner().Die();
+        FSM = null;
         return true;
     }
 

@@ -29,6 +29,9 @@ public class PlayerHolder : ScriptableObject
     {
         if (Units.Contains(u))
             Units.Remove(u);
+
+        if (Units.Count == 0)
+            OnPlayerEliminated();
     }
 
     public bool IsUnitFromPlayer(Unit unit)
@@ -39,5 +42,16 @@ public class PlayerHolder : ScriptableObject
     public void SetSelectedUnit(Unit unit)
     {
         CurrentSelectedUnit = unit;
+    }
+
+    private void OnPlayerEliminated()
+    {
+        DestroyImmediate(fSMObject); 
+        GameManager.Instance.OnPlayerEliminated(this);
+    }
+
+    public string GetPlayerName()
+    {
+        return this.name;
     }
 }

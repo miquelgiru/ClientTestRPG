@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerOwner: {fileID: 11400000, guid: 2f989cce65811584785fd67caf7e970d, type: 2}
-  Stats: {fileID: 11400000, guid: 2552ef2055be3b5469a7be0ea71fa000, type: 2}
+  Stats: {fileID: 11400000, guid: 403d76c1b61d1fd4c9c7405ce7dadac2, type: 2}
   CurrentEnemy: {fileID: 0}
   fSMObjectPrefab: {fileID: 7616699787437341553, guid: 2e68127954b9adc4dbaed28e5c68bd05,
     type: 3}

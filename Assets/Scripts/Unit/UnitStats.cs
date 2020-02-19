@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UnitStats", menuName = "Gameplay/UnitStats", order = 1)]
+[CreateAssetMenu(fileName = "UnitStats", menuName = "Gameplay/Unit/UnitStats", order = 1)]
 public class UnitStats : ScriptableObject
 {
     public int HealthPoints;

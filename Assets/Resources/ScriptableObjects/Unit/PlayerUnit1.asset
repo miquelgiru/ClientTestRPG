@@ -16,4 +16,4 @@ MonoBehaviour:
   DamageAttackPoints: 25
   AttackRange: 3
   MoveRange: 2
-  MovementSpeed: 2
+  MovementSpeed: 1

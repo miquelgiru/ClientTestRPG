@@ -64,6 +64,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OnPlayerEliminated(PlayerHolder player)
+    {
+        foreach(Turn t in Turns)
+        {
+            if(t.Player == player)
+            {
+                Turns.Remove(t);
+
+                if(Turns.Count == 1)
+                {
+                    FinishGame(Turns[0]);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void FinishGame(Turn winner)
+    {
+        Debug.Log(winner.Player.GetPlayerName() + "Has won the game!!");
+    }
+
     #region Unit Management
     public void RegisterUnit(Unit unit)
     {

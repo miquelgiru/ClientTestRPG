@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5867658d1839d9b44be90d4eb1860612, type: 3}
-  m_Name: TickPhase
+  m_Script: {fileID: 11500000, guid: 72758d27987b146449a78aaef5365de2, type: 3}
+  m_Name: EnemyUnit
   m_EditorClassIdentifier: 
-  PhaseName: 
-  ForceExit: 0
+  HealthPoints: 50
+  DamageAttackPoints: 15
+  AttackRange: 3
+  MoveRange: 2
+  MovementSpeed: 1

@@ -29,6 +29,7 @@ public class UnitOnAttackedState : State
 
     protected override bool OnEndState()
     {
+        FSM.GetUnitOwner().RecalculateHealth();
         isInit = false;
         ForceQuit = false;
         FSM.GetUnitOwner().RecalculateHealth();
