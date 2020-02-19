@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "UnitMoveState", menuName = "Gameplay/Unit/States/UnitMoveState", order = 1)]
 public class UnitOnMoveState : State
 {
+    UnitFSM fSM = null;
     Unit unit;
     private int index = 0;
     private List<GridNode> path = null;
@@ -12,10 +13,10 @@ public class UnitOnMoveState : State
 
     public override bool ExecuteState(FSM fsm)
     {
-        unit = ((UnitFSM)fsm).GetUnitOwner();
-
         if (!isInit)
         {
+            fSM = fsm as UnitFSM;
+            unit = ((UnitFSM)fsm).GetUnitOwner();
             isInit = OnStartState();
         }
 
@@ -23,13 +24,8 @@ public class UnitOnMoveState : State
 
         if(path != null)
         {
-            if (OnExecuteState() || ForceQuit)
+            if (OnExecuteState() == true)
             {
-                if (ForceQuit)
-                {
-                    ((UnitFSM)fsm).ChangeState(((UnitFSM)fsm).ForcedState);
-                }
-
                 return OnEndState();
             }
         }
@@ -43,12 +39,15 @@ public class UnitOnMoveState : State
         index = 0;
         path = null;
         unit.HasMoved = true;
+        fSM.ChangeState(UnitFSM.UnitStates.SELECTED);
         return true;
     }
 
     protected override bool OnExecuteState()
     {
         //NEXT STEPS: Play walk/run animation
+        if (unit.HasMoved)
+            return false;
 
         Vector3 from = path[index].WorldPosition;
         Vector3 to = path[index + 1].WorldPosition;
@@ -79,6 +78,7 @@ public class UnitOnMoveState : State
 
         index = 0;
         path = null;
+        ForceQuit = false;
 
         return true;
     }

@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour
 
         Turn next = Turns[index];
         ChangeTurn(next);
+
+        Debug.Log("Turn: " + index);
     }
     #endregion
 

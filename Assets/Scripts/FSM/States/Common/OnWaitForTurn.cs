@@ -12,6 +12,9 @@ public class AiOnWaitForTurn : State
             {
                 var temp = u.fSM as UnitFSM;
                 temp.ForceChangeState(UnitFSM.UnitStates.IDLE);
+                u.HasAttacked = false;
+                u.HasBeenAttacked = false;
+                u.HasMoved = false;
             }
                 
             isInit = OnStartState();
@@ -33,7 +36,7 @@ public class AiOnWaitForTurn : State
 
     protected override bool OnExecuteState()
     {
-        //TODO GET NOTIFICATION THAT NEW TURN HAS STARTED and ret true
+        
 
         return false;
     }

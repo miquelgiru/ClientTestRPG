@@ -71,7 +71,7 @@ public class AiOnManageTurn : State
     {
         UnitFSM fsm = u.fSM as UnitFSM;
 
-        if (!isAttacking)
+        if (!isAttacking && !isMoving)
         {
             Unit enemy = null;
             if (CheckEnemyInRange(u, out enemy))
@@ -91,7 +91,7 @@ public class AiOnManageTurn : State
         }
         
 
-        if (!isMoving)
+        if (!isMoving && !isAttacking)
         {
             GridNode[] randomPos = GameManager.Instance.GetNeighbours(u.GetCurrentNode(), Random.Range(0, 2)).ToArray();
             GridNode target = randomPos[Random.Range(0, randomPos.Length - 1)];

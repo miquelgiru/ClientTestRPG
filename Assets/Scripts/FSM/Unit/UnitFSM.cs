@@ -44,7 +44,6 @@ public class UnitFSM : FSM
             CurrentState = newState;
             states[CurrentState].isInit = false;
             ForcedState = UnitStates.NONE;
-            Debug.Log(newState.ToString());
         }
     }
     public void ForceChangeState(UnitStates newState)
