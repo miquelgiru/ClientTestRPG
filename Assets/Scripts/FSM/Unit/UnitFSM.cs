@@ -49,7 +49,6 @@ public class UnitFSM : FSM
     }
     public void ForceChangeState(UnitStates newState)
     {
-        Debug.Log("PASA");
         ForcedState = newState;
         states[CurrentState].ForceQuit = true;
     }

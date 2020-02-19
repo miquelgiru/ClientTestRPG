@@ -10,7 +10,6 @@ public class UnitOnIdleState : State
         {
             isInit = OnStartState();
             ForceQuit = false;
-            Debug.Log(((UnitFSM)fsm).GetUnitOwner().gameObject.name);
         }
 
         if (OnExecuteState() || ForceQuit)

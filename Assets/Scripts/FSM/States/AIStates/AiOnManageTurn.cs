@@ -95,10 +95,14 @@ public class AiOnManageTurn : State
         {
             GridNode[] randomPos = GameManager.Instance.GetNeighbours(u.GetCurrentNode(), Random.Range(0, 2)).ToArray();
             GridNode target = randomPos[Random.Range(0, randomPos.Length - 1)];
-            GameManager.Instance.PathfinderCall(target, u);
-            fsm.ForceChangeState(UnitFSM.UnitStates.MOVE);
 
-            isMoving = true;
+            if(target != u.GetCurrentNode())
+            {
+                GameManager.Instance.PathfinderCall(target, u);
+                fsm.ForceChangeState(UnitFSM.UnitStates.MOVE);
+
+                isMoving = true;
+            }          
         }
         else
         {
