@@ -132,6 +132,9 @@ public class GameManager : MonoBehaviour
     #region Pathfinder
     public void PathfinderCall(GridNode target, Unit u)
     {
+        if (target.Occupied)
+            return;
+
         if (!ispathfinding)
         {
             ispathfinding = true;
@@ -196,6 +199,8 @@ public class GameManager : MonoBehaviour
         List<GridNode> reachableNodes = new List<GridNode>();
         List<GridNode> openNodes = new List<GridNode>();
         List<GridNode> closedNodes = new List<GridNode>();
+        List<GridNode> NodesToClean = new List<GridNode>();
+
 
         openNodes.Add(center);
         int steps = 0;
@@ -211,17 +216,21 @@ public class GameManager : MonoBehaviour
             {
                 foreach(GridNode n in GetNeighbours(current, steps))
                 {
-                    if (!closedNodes.Contains(n))
+                    NodesToClean.Add(n);
+                    if (!n.Occupied)
                     {
-                        int newStepCost = n.Steps;
-
-                        if(newStepCost <= u.Stats.MoveRange)
+                        if (!closedNodes.Contains(n))
                         {
-                            if (!openNodes.Contains(n))
+                            int newStepCost = n.Steps;
+
+                            if (newStepCost <= u.Stats.MoveRange)
                             {
-                                openNodes.Add(n);
-                                u.Steps = newStepCost;
-                                reachableNodes.Add(n);
+                                if (!openNodes.Contains(n))
+                                {
+                                    openNodes.Add(n);
+                                    u.Steps = newStepCost;
+                                    reachableNodes.Add(n);
+                                }
                             }
                         }
                     }
@@ -232,7 +241,7 @@ public class GameManager : MonoBehaviour
             closedNodes.Add(current);
         }
 
-        foreach(GridNode n in closedNodes)
+        foreach(GridNode n in NodesToClean)
         {
             n.Steps = 0;
         }

@@ -40,6 +40,7 @@ public class UnitOnAttackState : State
 
         //Attack management
         FSM.GetUnitOwner().HasAttacked = true;
+        FSM.GetUnitOwner().CanAttack = true;
         target.DamageTaken += FSM.GetUnitOwner().Stats.DamageAttackPoints;
         target.HasBeenAttacked = true;
 

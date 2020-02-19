@@ -28,6 +28,7 @@ public class PlayerFSM : FSM
     {
         if(CurrentState != newState)
         {
+            Debug.Log(newState.ToString() + "--" + GetOwner().CurrentSelectedUnit);
             CurrentState = newState;
             states[CurrentState].isInit = false;
         }

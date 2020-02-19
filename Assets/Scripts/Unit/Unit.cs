@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     public int Steps = 0;
     public float DamageTaken = 0;
     public bool HasBeenAttacked = false;
+    public bool CanAttack = false;
 
     public List<GridNode> CurrentPath;
 
@@ -49,12 +50,19 @@ public class Unit : MonoBehaviour
 
     public void SetCurrentNode(GridNode node)
     {
+        if (currentNode != null)
+            currentNode.Occupied = false;
+
         currentNode = node;
+        currentNode.Occupied = true;
     }
 
     public bool IsEnemyInRange(Unit enemy)
     {
-        return (Vector3.Distance(currentNode.WorldPosition, enemy.currentNode.WorldPosition) <= Stats.AttackRange);
+        if (PlayerOwner == enemy.PlayerOwner)
+            return false;
+        Debug.Log("Range: " + Vector3.Distance(currentNode.WorldPosition, enemy.currentNode.WorldPosition));
+        return (Vector3.Distance(currentNode.WorldPosition, enemy.currentNode.WorldPosition) < Stats.AttackRange);
     }
 
     public void RecalculateHealth()

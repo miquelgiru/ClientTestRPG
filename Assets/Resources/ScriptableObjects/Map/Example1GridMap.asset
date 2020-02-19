@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6993ab9f26a124b9b092cc9bece7a1, type: 3}
   m_Name: Example1GridMap
   m_EditorClassIdentifier: 
-  SizeX: 5
+  SizeX: 10
   SizeY: 0
   SizeZ: 5
   ObstaclePercentage: 0

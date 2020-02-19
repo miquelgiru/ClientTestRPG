@@ -10,6 +10,7 @@ public class GridNode
     public GridElement Element;
     public GridNode ParentNode;
     public Renderer TileRenderer;
+    public bool Occupied = false;
     public int Steps = 0;
     public float hCost;
     public float gCost;
@@ -21,7 +22,7 @@ public class GridNode
         }
     }
 
-    public GridNode(int x, int y, int z, Vector3 worldPos, GridElement element, bool isWalkable = true)
+    public GridNode(int x, int y, int z, Vector3 worldPos, GridElement element, bool isWalkable = true, bool isoccupied = false)
     {
         X = x;
         Y = y;
@@ -29,5 +30,6 @@ public class GridNode
         WorldPosition = worldPos;
         IsWalkable = isWalkable;
         Element = element;
+        Occupied = isoccupied;
     }
 }

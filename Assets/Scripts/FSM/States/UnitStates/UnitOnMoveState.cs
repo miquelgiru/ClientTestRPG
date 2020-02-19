@@ -39,7 +39,12 @@ public class UnitOnMoveState : State
         index = 0;
         path = null;
         unit.HasMoved = true;
-        fSM.ChangeState(UnitFSM.UnitStates.SELECTED);
+
+        if(CanAttackEnemy())
+            fSM.ChangeState(UnitFSM.UnitStates.SELECTED);
+        else
+            fSM.ChangeState(UnitFSM.UnitStates.IDLE);
+
         return true;
     }
 
@@ -81,5 +86,18 @@ public class UnitOnMoveState : State
         ForceQuit = false;
 
         return true;
+    }
+
+    private bool CanAttackEnemy()
+    {
+        foreach(Unit u in GameManager.Instance.GetAllUnits())
+        {
+            if (unit.IsEnemyInRange(u))
+            {
+                unit.CanAttack = true;
+                return true;
+            }
+        }
+        return false;
     }
 }

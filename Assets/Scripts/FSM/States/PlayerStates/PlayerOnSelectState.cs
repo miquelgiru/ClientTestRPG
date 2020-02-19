@@ -79,6 +79,18 @@ public class PlayerOnSelectState : State
                             currentUnit.CurrentEnemy = enemy;
                             return true;
                         }
+
+                        else
+                        {
+                            currentUnit.CanAttack = false;
+
+                            if (currentUnit.HasMoved)
+                            {
+                                ((UnitFSM)currentUnit.fSM).ForceChangeState(UnitFSM.UnitStates.IDLE);
+                                nextState = PlayerFSM.PlayerStates.IDLE;
+                                ForceQuit = true;
+                            }
+                        }
                     }
 
                     else
@@ -95,6 +107,7 @@ public class PlayerOnSelectState : State
     protected override bool OnEndState()
     {
         GameManager.Instance.ClearReachableNodes();
+        ForceQuit = false;
         return true;
     }
 }
