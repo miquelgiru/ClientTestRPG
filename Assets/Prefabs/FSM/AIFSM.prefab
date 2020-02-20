@@ -49,4 +49,4 @@ MonoBehaviour:
   - StateType: 0
     state: {fileID: 11400000, guid: 2d0a0c1575c98254b9bb0eaa53deda72, type: 2}
   - StateType: 1
-    state: {fileID: 11400000, guid: f920a2b0af9803e4b87c13fd4b06c12a, type: 2}
+    state: {fileID: 11400000, guid: c19d887201c2219488868b41aa099f74, type: 2}
