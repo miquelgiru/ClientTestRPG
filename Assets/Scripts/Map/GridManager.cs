@@ -108,4 +108,18 @@ public class GridManager : MonoBehaviour
 
         return null;
     }
+
+    public bool PlaceUnitInitial(Unit unit, Vector3 pos)
+    {
+        GridNode node = GetNodeFromWorldPosition(pos);
+
+        if(node != null)
+        {
+            unit.transform.position = new Vector3(node.X, 0, node.Z);
+            unit.SetCurrentNode(node);
+            return true;
+        }
+
+        return false;
+    }
 }

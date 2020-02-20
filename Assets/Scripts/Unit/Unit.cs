@@ -37,9 +37,6 @@ public class Unit : MonoBehaviour
 
     public GridNode GetCurrentNode()
     {
-        if(currentNode == null)
-            currentNode = GameManager.Instance.gridManager.GetNode(0, 0);
-
         return currentNode;
     }
 
@@ -61,7 +58,6 @@ public class Unit : MonoBehaviour
     {
         if (PlayerOwner == enemy.PlayerOwner)
             return false;
-        Debug.Log("Range: " + Vector3.Distance(currentNode.WorldPosition, enemy.currentNode.WorldPosition));
         return (Vector3.Distance(currentNode.WorldPosition, enemy.currentNode.WorldPosition) < Stats.AttackRange);
     }
 

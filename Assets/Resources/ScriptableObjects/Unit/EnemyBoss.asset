@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c6993ab9f26a124b9b092cc9bece7a1, type: 3}
-  m_Name: Example1GridMap
+  m_Script: {fileID: 11500000, guid: 72758d27987b146449a78aaef5365de2, type: 3}
+  m_Name: EnemyBoss
   m_EditorClassIdentifier: 
-  SizeX: 20
-  SizeY: 0
-  SizeZ: 10
-  ObstaclePercentage: 0
+  HealthPoints: 100
+  DamageAttackPoints: 15
+  AttackRange: 3
+  MoveRange: 1
+  MovementSpeed: 1

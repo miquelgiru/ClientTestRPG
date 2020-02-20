@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     public Material ReachableEnemyMaterial;
     public Material DefaultMaterial;
 
+    [Header("Units Setup")]
+    public UnitsSetup setup;
+
+
     [Header("Turn Management")]
     public List<Turn> Turns;
     private int turnIndex = 0;
@@ -32,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         gridManager.Init();
+        InitUnits();
     }
 
     private void Start()
@@ -61,6 +66,29 @@ public class GameManager : MonoBehaviour
         foreach(Turn t in Turns)
         {
             t.Player.Init();
+        }
+    }
+
+    private void InitUnits()
+    {
+        foreach(UnitsSetup.UnitSetup u in setup.Player1Setup)
+        {
+            GameObject unit = Instantiate(u.UnitPrefab);
+            SetupUnit(unit.GetComponent<Unit>(), u.InitialPos);
+        }
+
+        foreach (UnitsSetup.UnitSetup u in setup.AISetup)
+        {
+            GameObject unit = Instantiate(u.UnitPrefab);
+            SetupUnit(unit.GetComponent<Unit>(), u.InitialPos);
+        }
+    }
+
+    private void SetupUnit(Unit unit, Vector3 pos)
+    {
+        if(!gridManager.PlaceUnitInitial(unit, pos))
+        {
+            Debug.LogError("Unit could not be placed because the position setup is incorrect or the position is already taken: " + pos);
         }
     }
 
