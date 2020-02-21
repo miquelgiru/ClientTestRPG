@@ -111,7 +111,7 @@ MonoBehaviour:
   PlayerOwner: {fileID: 11400000, guid: 2f989cce65811584785fd67caf7e970d, type: 2}
   Stats: {fileID: 11400000, guid: 33e510d403d3ebb43aa5f0238668f6d4, type: 2}
   CurrentEnemy: {fileID: 0}
-  Healthbar: {fileID: 0}
+  Healthbar: {fileID: 8469333058040993626}
   DefaultMaterial: {fileID: 2100000, guid: 09dbb04ab944fef49ba2c26c6dbd1374, type: 2}
   SelectedMaterial: {fileID: 2100000, guid: 09dbb04ab944fef49ba2c26c6dbd1374, type: 2}
   fSMObjectPrefab: {fileID: 7616699787437341553, guid: 2e68127954b9adc4dbaed28e5c68bd05,
@@ -4977,3 +4977,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5789691252698586626}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8469333058040993626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2724677842561960280, guid: 79978acbba10bf548b61483c8b5b036d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5789691252698586626}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

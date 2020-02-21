@@ -1,21 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraMove : MonoBehaviour
 {
 
     public float Speed;
-    private float width;
-    private float height;
-    private Vector3 position;
 
-    private void Awake()
-    {
-        width = (float)Screen.width / 2.0f;
-        height = (float)Screen.height / 2.0f;
-        position = Vector3.zero;
-    }
 
     private void Update()
     {
@@ -23,6 +15,7 @@ public class CameraMove : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE_WIN
 
         float x = 0, z = 0;
+        Speed = 1;
         if (Input.GetMouseButton(0))
         {
             x = Input.GetAxis("Horizontal") * Speed * Time.deltaTime;
@@ -33,23 +26,17 @@ public class CameraMove : MonoBehaviour
 
 #if UNITY_IOS || UNITY_ANDROID
 
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
-            Touch touch = Input.GetTouch(0);
-
-            if (touch.phase == TouchPhase.Moved)
-            {
-                Vector2 pos = touch.position;
-                pos.x = (pos.x - width) / width;
-                pos.y = (pos.y - height) / height;
-                position = new Vector3(-pos.x, pos.y, 0.0f);
-
-                transform.position = position;
-            }
+            Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+            transform.Translate(-touchDeltaPosition.x * Speed, 0, -touchDeltaPosition.y * Speed);
+            Debug.Log(transform.position.ToString());
         }
-         
+
 #endif
+
 
     }
 
 }
+
