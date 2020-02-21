@@ -29,10 +29,11 @@ public class UnitOnAttackedState : State
 
     protected override bool OnEndState()
     {
-        FSM.GetUnitOwner().RecalculateHealth();
         isInit = false;
         ForceQuit = false;
         FSM.GetUnitOwner().RecalculateHealth();
+        FSM.GetUnitOwner().ShowFeedbackOnAttacked();
+        FSM.ChangeState(UnitFSM.UnitStates.IDLE);
         return true;
     }
 
@@ -42,7 +43,9 @@ public class UnitOnAttackedState : State
         //NEXT STEPS: Play animation on being attacked
 
         if (FSM.GetUnitOwner().HasBeenAttacked)
+        {
             return true;
+        }
 
         return false;
     }

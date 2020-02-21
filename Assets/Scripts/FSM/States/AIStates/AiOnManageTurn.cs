@@ -37,7 +37,7 @@ public class AiOnManageTurn : State
         units = null;
         index = 0;
 
-        GameManager.Instance.PasTurn();
+        GameManager.Instance.PassTurn();
 
         return true;
     }

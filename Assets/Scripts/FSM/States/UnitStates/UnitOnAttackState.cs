@@ -43,6 +43,7 @@ public class UnitOnAttackState : State
         FSM.GetUnitOwner().CanAttack = true;
         target.DamageTaken += FSM.GetUnitOwner().Stats.DamageAttackPoints;
         target.HasBeenAttacked = true;
+        target.RecalculateHealth();
 
         isInit = false;
         ForceQuit = false;

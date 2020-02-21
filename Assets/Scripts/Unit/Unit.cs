@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
     public PlayerHolder PlayerOwner;
     public UnitStats Stats;
     public Unit CurrentEnemy = null;
+
+    public Slider Healthbar;
+    //public Part
+
     private GridNode currentNode = null;
 
     [Header("State Machine")]
@@ -71,9 +76,12 @@ public class Unit : MonoBehaviour
         RecalculateHealthBar();
     }
 
-    private void RecalculateHealthBar()
+    public void RecalculateHealthBar()
     {
-
+        if (HasBeenAttacked)
+        {
+            Healthbar.value = Healthbar.maxValue - DamageTaken;
+        }
     }
 
     public bool Die()
@@ -83,4 +91,33 @@ public class Unit : MonoBehaviour
         DestroyImmediate(gameObject);
         return true;
     }
+
+    private void InitHealthBar()
+    {
+        if(Healthbar != null)
+        {
+            Healthbar.maxValue = Stats.HealthPoints;
+            Healthbar.value = Healthbar.maxValue;
+        }
+    }
+
+    public void ShowFeedbackOnAttacked()
+    {
+        StartCoroutine(BleedInteractionCoroutine());
+    }
+
+    private IEnumerator BleedInteractionCoroutine()
+    {
+        ParticleSystem ps = GetComponent<ParticleSystem>();
+        ps.Play();
+        yield return new WaitForSeconds(0.5f);
+        ps.Stop();
+    }
+
+    //private void Update()
+    //{
+    //    Healthbar.transform.LookAt(Camera.main.transform, -Vector3.up);
+    //    Vector3 rot = Healthbar.transform.rotation.eulerAngles;
+    //    Healthbar.transform.rotation = Quaternion.Euler(rot.x, 0, rot.z);
+    //}
 }

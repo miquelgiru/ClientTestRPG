@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Gid Management")]
     public GridManager gridManager;
-    public LineRenderer pathDebugDraw;
     public Material ReachableMaterial;
     public Material ReachableEnemyMaterial;
     public Material DefaultMaterial;
@@ -27,9 +27,11 @@ public class GameManager : MonoBehaviour
 
 
     [Header("Turn Management")]
+    public Text NewTurnText;
     public List<Turn> Turns;
     private int turnIndex = 0;
     private Turn currentTurn = null;
+    
 
 
     private void Awake()
@@ -47,17 +49,6 @@ public class GameManager : MonoBehaviour
         {
             currentTurn = Turns[0];
             currentTurn.StartTurn();
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.P)){
-
-            if (Turns.Count - 1 == turnIndex)
-                turnIndex = 0;
-
-            ChangeTurn(Turns[++turnIndex]);
         }
     }
 
@@ -102,16 +93,22 @@ public class GameManager : MonoBehaviour
 
                 if(Turns.Count == 1)
                 {
-                    FinishGame(Turns[0]);
+                    StartCoroutine(FinishGame(Turns[0]));
                     break;
                 }
             }
         }
     }
 
-    private void FinishGame(Turn winner)
+    private IEnumerator FinishGame(Turn winner)
     {
+        NewTurnText.text = winner.Player.GetPlayerName() + " Has won";
+        NewTurnText.transform.parent.gameObject.SetActive(true);
         Debug.Log(winner.Player.GetPlayerName() + "Has won the game!!");
+
+        yield return new WaitForSeconds(2.0f);
+
+        Application.Quit();
     }
 
     #region Unit Management
@@ -142,19 +139,6 @@ public class GameManager : MonoBehaviour
             currentTurn.StartTurn();
         }
     }
-
-    public void PasTurn()
-    {
-        int index = Turns.IndexOf(currentTurn) + 1;
-
-        if (index >= Turns.Count)
-            index = 0;
-
-        Turn next = Turns[index];
-        ChangeTurn(next);
-
-        Debug.Log("Turn: " + index);
-    }
     #endregion
 
     #region Pathfinder
@@ -179,7 +163,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        pathDebugDraw.positionCount = path.Count;
         List<Vector3> positions = new List<Vector3>();
         Vector3 offset = Vector3.up * .1f;
         positions.Add(unit.GetCurrentNode().WorldPosition + offset);
@@ -190,7 +173,6 @@ public class GameManager : MonoBehaviour
         }
 
         unit.SetCurrentPath(path);
-        pathDebugDraw.SetPositions(positions.ToArray());
     }
 
     #endregion
@@ -340,5 +322,31 @@ public class GameManager : MonoBehaviour
         return allUnits;
     }
 
+    #endregion
+
+    #region Turn Management
+
+    public void PassTurn()
+    {
+        StartCoroutine(PassTurnCoroutine());
+    }
+
+
+    private IEnumerator PassTurnCoroutine()
+    {
+        int index = Turns.IndexOf(currentTurn) + 1;
+
+        if (index >= Turns.Count)
+            index = 0;
+
+        NewTurnText.transform.parent.gameObject.SetActive(true);
+        NewTurnText.text = Turns[index].Player.name + " Turn";
+        yield return new WaitForSeconds(1.0f);
+        NewTurnText.transform.parent.gameObject.SetActive(false);
+
+        Turn next = Turns[index];
+        ChangeTurn(next);
+
+    }
     #endregion
 }

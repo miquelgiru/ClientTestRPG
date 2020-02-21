@@ -20,7 +20,6 @@ public class PlayerOnAttack : State
 
         if(OnExecuteState() || ForceQuit)
         {
-            Debug.Log("Enemy Attacked: " + enemyCurrentUnit.gameObject.name);
             FSM.GetOwner().CurrentSelectedUnit.CurrentEnemy = null;
             FSM.GetOwner().CurrentSelectedUnit = null;
             FSM.ChangeState(PlayerFSM.PlayerStates.IDLE);
