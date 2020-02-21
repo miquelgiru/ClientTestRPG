@@ -58,6 +58,7 @@ public class AiOnManageTurn : State
         if (ManageUnitTurn(units[index]))
         {
             ++index;
+            isPathRequested = false;
         }
 
         return false;
@@ -131,6 +132,7 @@ public class AiOnManageTurn : State
             u.CurrentEnemy = enemy;
             fsm.ForceChangeState(UnitFSM.UnitStates.ATTACK);
             isAttacking = true;
+            Debug.Log("Enemy attacked");
             return true;
         }
 
@@ -139,24 +141,14 @@ public class AiOnManageTurn : State
 
     private bool Move(Unit u, UnitFSM fsm)
     {
-        int steps = Random.Range(0, u.Stats.MoveRange);
+        int steps = u.Stats.MoveRange;// Random.Range(1, u.Stats.MoveRange);
 
         if (steps == 0)
-            return false;
-
-        List<GridNode> path = new List<GridNode>();
-        for(int i = 0; i < steps + 1; ++i)
-        {
-            path.Add(u.CurrentPath[i]);
-        }
-
-        u.CurrentPath = path;
+            return false;       
+        u.CurrentPath = RecalculatePathToSteps(u.CurrentPath,u);
         fsm.ForceChangeState(UnitFSM.UnitStates.MOVE);
         isMoving = true;
         return true;
-        
-
-        return false;
     }
 
     private bool RequestPathForUnit(Unit u)
@@ -170,5 +162,25 @@ public class AiOnManageTurn : State
         }
 
         return false;
+    }
+
+    private List<GridNode> RecalculatePathToSteps(List<GridNode> path, Unit u)
+    {
+        List<GridNode> ret = new List<GridNode>();
+        int steps = u.Stats.MoveRange;
+        GridNode lastPos = path[0];
+
+        for(int i = 0; steps > 0; --steps)
+        {
+            if(lastPos.X != path[i].X && lastPos.Z != path[i].Z)
+            {
+                --steps;
+            }
+
+            ret.Add(path[i]);
+            ++i;
+        }
+
+        return ret;
     }
 }

@@ -41,6 +41,11 @@ public class PlayerHolder : ScriptableObject
 
     public void SetSelectedUnit(Unit unit)
     {
+        if(CurrentSelectedUnit != null)
+            ((UnitFSM)CurrentSelectedUnit.fSM).ForceChangeState(UnitFSM.UnitStates.IDLE);
+
+        if (unit == null)
+            CurrentSelectedUnit = null;
         CurrentSelectedUnit = unit;
     }
 

@@ -8,6 +8,7 @@ public class UnitOnSelectedState : State
     {
         if (!isInit)
         {
+            ((UnitFSM)fsm).GetUnitOwner().GetComponent<Renderer>().material = ((UnitFSM)fsm).GetUnitOwner().SelectedMaterial;
             isInit = OnStartState();
         }
 
@@ -18,6 +19,7 @@ public class UnitOnSelectedState : State
                 ((UnitFSM)fsm).ChangeState(((UnitFSM)fsm).ForcedState);
             }
 
+            ((UnitFSM)fsm).GetUnitOwner().GetComponent<Renderer>().material = ((UnitFSM)fsm).GetUnitOwner().DefaultMaterial;
             return OnEndState();
         }
 

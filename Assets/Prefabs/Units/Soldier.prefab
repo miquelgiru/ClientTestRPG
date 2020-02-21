@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c106ad50a225c5f42a5f7378c1735690, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,6 +112,8 @@ MonoBehaviour:
   Stats: {fileID: 11400000, guid: 2552ef2055be3b5469a7be0ea71fa000, type: 2}
   CurrentEnemy: {fileID: 0}
   Healthbar: {fileID: 8971586125237091235}
+  DefaultMaterial: {fileID: 2100000, guid: c106ad50a225c5f42a5f7378c1735690, type: 2}
+  SelectedMaterial: {fileID: 2100000, guid: 7ed343d5c5b74df42b3bbbf4ab23cbac, type: 2}
   fSMObjectPrefab: {fileID: 7616699787437341553, guid: 2e68127954b9adc4dbaed28e5c68bd05,
     type: 3}
   Steps: 0

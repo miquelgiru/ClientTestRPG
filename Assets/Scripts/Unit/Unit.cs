@@ -8,9 +8,10 @@ public class Unit : MonoBehaviour
     public PlayerHolder PlayerOwner;
     public UnitStats Stats;
     public Unit CurrentEnemy = null;
-
     public Slider Healthbar;
-    //public Part
+
+    public Material DefaultMaterial;
+    public Material SelectedMaterial;
 
     private GridNode currentNode = null;
 
@@ -56,8 +57,15 @@ public class Unit : MonoBehaviour
         if (currentNode != null)
             currentNode.Occupied = false;
 
-        currentNode = node;
-        currentNode.Occupied = true;
+        if(node == null)
+        {
+            currentNode = null;
+        }
+        else
+        {
+            currentNode = node;
+            currentNode.Occupied = true;
+        }
     }
 
     public bool IsEnemyInRange(Unit enemy)

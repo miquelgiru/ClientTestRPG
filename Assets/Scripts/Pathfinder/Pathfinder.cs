@@ -29,7 +29,7 @@ public class Pathfinder
     public void FindPath()
     {
         Path = FindPathNow();
-        unit.CurrentPath = Path;
+       // unit.CurrentPath = Path;
         isDone = true;
     }
 

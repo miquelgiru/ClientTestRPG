@@ -31,6 +31,8 @@ public class PlayerOnWaitTurn : State
 
     protected override bool OnEndState()
     {
+        isInit = false;
+        ForceQuit = false;
         return true;
     }
 

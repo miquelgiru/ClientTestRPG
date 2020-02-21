@@ -54,8 +54,12 @@ public class UnitOnMoveState : State
         if (unit.HasMoved)
             return false;
 
-        Vector3 from = path[index].WorldPosition;
+        Vector3 from = unit.GetCurrentNode().WorldPosition;
         Vector3 to = path[index + 1].WorldPosition;
+
+        if (path.Count > 2)
+            if (unit.DefaultMaterial == null)
+                Debug.Log(path.Count);
 
         if (path[index + 1].Occupied)
             return true;

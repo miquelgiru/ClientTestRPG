@@ -44,7 +44,7 @@ public class PlayerOnIdleState : State
                     Unit unit = hit.collider.GetComponent<Unit>();
                     if (player.IsUnitFromPlayer(unit))
                     {
-                        if(!unit.HasMoved && !unit.HasAttacked)
+                        if(!unit.HasAttacked)
                         {
                             player.SetSelectedUnit(unit);
                             nextState = PlayerFSM.PlayerStates.SELECT_UNIT;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72758d27987b146449a78aaef5365de2, type: 3}
   m_Name: PlayerUnit1
   m_EditorClassIdentifier: 
-  HealthPoints: 30
+  HealthPoints: 100
   DamageAttackPoints: 25
   AttackRange: 3
   MoveRange: 2

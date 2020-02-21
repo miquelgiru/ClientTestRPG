@@ -27,6 +27,7 @@ public class UnitOnDieState : State
     {
         ForceQuit = false;
         isInit = false;
+        FSM.GetUnitOwner().SetCurrentNode(null);
         FSM.GetUnitOwner().Die();
         FSM = null;
         return true;

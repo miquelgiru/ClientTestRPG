@@ -186,6 +186,8 @@ MonoBehaviour:
   Stats: {fileID: 11400000, guid: 403d76c1b61d1fd4c9c7405ce7dadac2, type: 2}
   CurrentEnemy: {fileID: 0}
   Healthbar: {fileID: 3613843940004452221}
+  DefaultMaterial: {fileID: 2100000, guid: 2908f9b0b6cd47140950cf4df3c38e4e, type: 2}
+  SelectedMaterial: {fileID: 2100000, guid: 2908f9b0b6cd47140950cf4df3c38e4e, type: 2}
   fSMObjectPrefab: {fileID: 7616699787437341553, guid: 2e68127954b9adc4dbaed28e5c68bd05,
     type: 3}
   Steps: 0

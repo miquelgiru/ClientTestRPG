@@ -30,7 +30,6 @@ public class AiFSM : FSM
         {
             CurrentState = newState;
             states[CurrentState].isInit = false;
-            Debug.Log(newState.ToString());
         }
     }
 

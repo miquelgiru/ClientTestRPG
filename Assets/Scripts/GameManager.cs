@@ -354,6 +354,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator PassTurnCoroutine()
     {
+        GameManager.Instance.ClearReachableNodes();
+
         int index = Turns.IndexOf(currentTurn) + 1;
 
         if (index >= Turns.Count)
