@@ -31,9 +31,9 @@ public class UnitOnAttackedState : State
     {
         isInit = false;
         ForceQuit = false;
-        FSM.GetUnitOwner().RecalculateHealth();
         FSM.GetUnitOwner().ShowFeedbackOnAttacked();
         FSM.ChangeState(UnitFSM.UnitStates.IDLE);
+
         return true;
     }
 

@@ -38,6 +38,7 @@ public class Unit : MonoBehaviour
         fSMObject = Instantiate(fSMObjectPrefab, transform) as GameObject;
         fSM = fSMObject.GetComponent<FSM>();
         ((UnitFSM)fSM).SetUnitOwner(this);
+        InitHealthBar();
     }
 
     public GridNode GetCurrentNode()

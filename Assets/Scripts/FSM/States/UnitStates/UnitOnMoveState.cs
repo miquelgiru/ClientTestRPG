@@ -56,6 +56,10 @@ public class UnitOnMoveState : State
 
         Vector3 from = path[index].WorldPosition;
         Vector3 to = path[index + 1].WorldPosition;
+
+        if (path[index + 1].Occupied)
+            return true;
+
         Vector3 move = Vector3.MoveTowards(unit.transform.position, to, Time.deltaTime * 2);
         unit.transform.position = move;
 

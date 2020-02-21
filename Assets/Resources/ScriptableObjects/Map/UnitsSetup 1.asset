@@ -22,4 +22,4 @@ MonoBehaviour:
   AISetup:
   - UnitPrefab: {fileID: 2889508769711116657, guid: 8890a11b0d1da8f4080751b509348b4a,
       type: 3}
-    InitialPos: {x: 2, y: 0, z: 1}
+    InitialPos: {x: 3, y: 0, z: 3}

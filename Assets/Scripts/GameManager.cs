@@ -144,8 +144,8 @@ public class GameManager : MonoBehaviour
     #region Pathfinder
     public void PathfinderCall(GridNode target, Unit u)
     {
-        if (target.Occupied)
-            return;
+        //if (target.Occupied)
+        //    return;
 
         if (!ispathfinding)
         {
@@ -320,6 +320,26 @@ public class GameManager : MonoBehaviour
     public List<Unit> GetAllUnits()
     {
         return allUnits;
+    }
+
+    public Unit GetClosestEnemy(Unit current)
+    {
+        Unit ret = null;
+        float closestDist = float.MaxValue;
+        foreach(Unit u in allUnits)
+        {
+            if(u.PlayerOwner != current.PlayerOwner)
+            {
+                float dis = Vector3.Distance(current.transform.position, u.transform.position);
+                if (dis < closestDist)
+                {
+                    closestDist = dis;
+                    ret = u;
+                }
+            }           
+        }
+
+        return ret;
     }
 
     #endregion

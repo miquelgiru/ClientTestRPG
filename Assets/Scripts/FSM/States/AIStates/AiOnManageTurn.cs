@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "AiManageTurnState", menuName = "Gameplay/AI/States/AiManageTurnState", order = 1)]
 public class AiOnManageTurn : State
@@ -10,6 +11,7 @@ public class AiOnManageTurn : State
     private bool isAttacking = false;
     private bool isMoving = false;
     private int index = 0;
+    private bool isPathRequested = false;
 
     public override bool ExecuteState(FSM fsm)
     {
@@ -36,6 +38,7 @@ public class AiOnManageTurn : State
         fSM = null;
         units = null;
         index = 0;
+        isPathRequested = false;
 
         GameManager.Instance.PassTurn();
 
@@ -73,13 +76,14 @@ public class AiOnManageTurn : State
 
         if (!isAttacking && !isMoving)
         {
-            Unit enemy = null;
-            if (CheckEnemyInRange(u, out enemy))
+            if(u.CurrentPath != null)
+                Move(u, fsm);
+
+            if (!Attack(u,fsm))
             {
-                u.CurrentEnemy = enemy;
-                fsm.ForceChangeState(UnitFSM.UnitStates.ATTACK);
-                isAttacking = true;
-            }           
+                if (!isPathRequested)
+                    isPathRequested = RequestPathForUnit(u);
+            }    
         }
         else
         {
@@ -88,32 +92,15 @@ public class AiOnManageTurn : State
                 isAttacking = false;
                 return true;
             }
-        }
-        
 
-        if (!isMoving && !isAttacking)
-        {
-            GridNode[] randomPos = GameManager.Instance.GetNeighbours(u.GetCurrentNode(), Random.Range(0, 2)).ToArray();
-            GridNode target = randomPos[Random.Range(0, randomPos.Length - 1)];
-
-            if(target != u.GetCurrentNode() && !target.Occupied)
-            {
-                GameManager.Instance.PathfinderCall(target, u);
-                fsm.ForceChangeState(UnitFSM.UnitStates.MOVE);
-
-                isMoving = true;
-            }
-            else
-            {
-                Debug.Log("No target available");
-            }
-        }
-        else
-        {
-            if (u.HasMoved)
+            if (u.HasMoved && !isAttacking)
             {
                 isMoving = false;
-                return true;
+                u.CurrentPath = null;
+                if(!Attack(u, fsm))
+                {
+                    return true;
+                }
             }
         }
 
@@ -132,6 +119,56 @@ public class AiOnManageTurn : State
         }
 
         enemy = null;
+        return false;
+    }
+
+    private bool Attack(Unit u, UnitFSM fsm)
+    {
+       
+        Unit enemy = null;
+        if (CheckEnemyInRange(u, out enemy))
+        {
+            u.CurrentEnemy = enemy;
+            fsm.ForceChangeState(UnitFSM.UnitStates.ATTACK);
+            isAttacking = true;
+            return true;
+        }
+
+        return false;
+    } 
+
+    private bool Move(Unit u, UnitFSM fsm)
+    {
+        int steps = Random.Range(0, u.Stats.MoveRange);
+
+        if (steps == 0)
+            return false;
+
+        List<GridNode> path = new List<GridNode>();
+        for(int i = 0; i < steps + 1; ++i)
+        {
+            path.Add(u.CurrentPath[i]);
+        }
+
+        u.CurrentPath = path;
+        fsm.ForceChangeState(UnitFSM.UnitStates.MOVE);
+        isMoving = true;
+        return true;
+        
+
+        return false;
+    }
+
+    private bool RequestPathForUnit(Unit u)
+    {
+        Unit target = GameManager.Instance.GetClosestEnemy(u);
+
+        if(target != null)
+        {
+            GameManager.Instance.PathfinderCall(target.GetCurrentNode(), u);
+            return true;
+        }
+
         return false;
     }
 }
