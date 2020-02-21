@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 196991709}
   - component: {fileID: 196991708}
   - component: {fileID: 196991707}
+  - component: {fileID: 196991710}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -312,6 +313,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 60.569004, y: 0, z: 0}
+--- !u!114 &196991710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196991706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40e651ebb6ac87146b059724bb8d1bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 1
 --- !u!1 &258651780
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +462,7 @@ MonoBehaviour:
   ReachableEnemyMaterial: {fileID: 2100000, guid: 2908f9b0b6cd47140950cf4df3c38e4e,
     type: 2}
   DefaultMaterial: {fileID: 2100000, guid: 6a7096a95dc4516418a15acfa1a6c771, type: 2}
-  setup: {fileID: 11400000, guid: 70ead216c8c5f094889966fd7c364465, type: 2}
+  setup: {fileID: 11400000, guid: ef67824c50ceabc4e89c427ded57fa8c, type: 2}
   NewTurnText: {fileID: 1524188402}
   Turns:
   - {fileID: 11400000, guid: a21728adbd539474597d3fd3b0396869, type: 2}
