@@ -9,5 +9,4 @@ public class UnitStats : ScriptableObject
     public int DamageAttackPoints;
     public float AttackRange;
     public int MoveRange;
-    public float MovementSpeed;
 }

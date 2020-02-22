@@ -122,11 +122,4 @@ public class Unit : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         ps.Stop();
     }
-
-    //private void Update()
-    //{
-    //    Healthbar.transform.LookAt(Camera.main.transform, -Vector3.up);
-    //    Vector3 rot = Healthbar.transform.rotation.eulerAngles;
-    //    Healthbar.transform.rotation = Quaternion.Euler(rot.x, 0, rot.z);
-    //}
 }

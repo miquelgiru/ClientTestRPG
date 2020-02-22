@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public abstract class FSM : MonoBehaviour
 {
     protected PlayerHolder Owner;
-    public bool forceExit = false;
 
     private void Start()
     {

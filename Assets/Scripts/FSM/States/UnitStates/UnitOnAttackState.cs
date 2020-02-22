@@ -40,7 +40,7 @@ public class UnitOnAttackState : State
 
         //Attack management
         FSM.GetUnitOwner().HasAttacked = true;
-        FSM.GetUnitOwner().CanAttack = true;
+        FSM.GetUnitOwner().CanAttack = false;
         target.DamageTaken += FSM.GetUnitOwner().Stats.DamageAttackPoints;
         target.HasBeenAttacked = true;
         target.RecalculateHealth();
@@ -53,7 +53,6 @@ public class UnitOnAttackState : State
 
     protected override bool OnExecuteState()
     {
-        //TODO: Show attack feedback
         //NEXT STEPS: Wait for attack animation to finish
         //NEXT STEPS: counter should be the attack animation
         if (counter > 20)

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -108,7 +109,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2.0f);
 
-        Application.Quit();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     #region Unit Management
@@ -125,19 +126,6 @@ public class GameManager : MonoBehaviour
     {
         if (allUnits.Contains(unit))
             allUnits.Remove(unit);
-    }
-    #endregion
-
-    #region Turn Management
-    public void ChangeTurn(Turn turn)
-    {
-        if(turn != currentTurn)
-        {
-            if(currentTurn != null)
-                currentTurn.EndTurn();
-            currentTurn = turn;
-            currentTurn.StartTurn();
-        }
     }
     #endregion
 
@@ -163,20 +151,10 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        List<Vector3> positions = new List<Vector3>();
-        Vector3 offset = Vector3.up * .1f;
-        positions.Add(unit.GetCurrentNode().WorldPosition + offset);
-
-        for (int i = 0; i < path.Count; i++)
-        {
-            positions.Add(path[i].WorldPosition + Vector3.up * .1f);
-        }
-
         unit.SetCurrentPath(path);
     }
 
     #endregion
-
 
     #region Tile Management
 
@@ -345,6 +323,17 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Turn Management
+
+    public void ChangeTurn(Turn turn)
+    {
+        if (turn != currentTurn)
+        {
+            if (currentTurn != null)
+                currentTurn.EndTurn();
+            currentTurn = turn;
+            currentTurn.StartTurn();
+        }
+    }
 
     public void PassTurn()
     {
